@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "GenerateDocument";
+}
+
+<h4>Получние данных клиента</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="SocialNumber" class="control-label">Введите ИНН клиента</label>
+            <input class="form-control" id="SocialNumber" value="12345543211234" type="number" placeholder="10000000000000"/>
+            <span validation-for="SocialNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Generate" class="btn btn-primary" onclick="GenerateDocument();" />
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function GenerateDocument()
+    {
+
+
+        const socialNumber = document.getElementById("SocialNumber").value;
+        var url = "@Url.Action("GenerateDocument", "Home", new { SocialNumber= "00" })";
+        url = url.replace("00", encodeURIComponent(socialNumber));
+        console.log(socialNumber);
+        $.ajax({
+            "method": "POST",
+            "url": url
+        })
+            .done(function (data) {
+                alert(data);
+            });
+    }
+</script>
